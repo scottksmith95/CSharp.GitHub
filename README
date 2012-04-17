@@ -1,0 +1,9 @@
+CSharp.GitHub is a C# .NET wrapper for the GitHub RESTful API.
+
+It contains the following
+
+  * OAuth connection support for GitHub
+  * API access via explicit Urls and response handling for GitHub
+  * ASP.NET MVC 3 example project
+
+API documentation can be found here: http://developer.github.com/
