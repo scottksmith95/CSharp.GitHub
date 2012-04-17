@@ -28,33 +28,13 @@ namespace CSharp.GitHub.Api
     public enum GitHubApiError
     {
 		/// <summary>
-		/// 400 status code. The server could not understand your request. Verify that request parameters (and content, if any) are valid.
+		/// 400 status codes.
 		/// </summary>
-		BadRequest,
-
-        /// <summary>
-		/// 401 status code. Authentication failed or was not provided. Verify that you have sent valid credentials.
-        /// </summary>
-        AuthorizationRequired,
+		ClientError,
 
 		/// <summary>
-		/// 403 status code. The server understood your request and verified your credentials, but you are not allowed to perform the requested action.
+		/// 500 status codes.
 		/// </summary>
-		Forbidden,
-
-        /// <summary>
-		/// 404 status code. The resource that you requested does not exist.
-        /// </summary>
-        NotFound,
-
-        /// <summary>
-		/// 409 status code. The resource that you are trying to create already exists. This should also provide a Location header to the resource in question.
-        /// </summary>
-        Conflict,
-
-        /// <summary>
-		/// 500 status code. An unknown error has occurred.
-        /// </summary>
-        InternalServerError
+		ServerError
     }
 }

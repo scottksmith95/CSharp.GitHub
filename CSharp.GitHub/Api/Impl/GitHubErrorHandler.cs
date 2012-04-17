@@ -47,15 +47,18 @@ namespace CSharp.GitHub.Api.Impl
         /// <param name="response">The response message with the error.</param>
         public override void HandleError(Uri requestUri, HttpMethod requestMethod, HttpResponseMessage<byte[]> response)
         {
-            var type = (int)response.StatusCode / 100;
-            if (type == 4)
-            {
-                HandleClientErrors(response);
-            }
-            else if (type == 5)
-            {
-                HandleServerErrors(response.StatusCode);
-            }
+			if (response == null) throw new ArgumentNullException("response");
+
+			var type = (int)response.StatusCode / 100;
+			switch (type)
+			{
+				case 4:
+					HandleClientErrors(response.StatusCode);
+					break;
+				case 5:
+					HandleServerErrors(response.StatusCode);
+					break;
+			}
 
             // if not otherwise handled, do default handling and wrap with GitHubApiException
             try
@@ -68,54 +71,18 @@ namespace CSharp.GitHub.Api.Impl
             }
         }
 
-        private void HandleClientErrors(HttpResponseMessage<byte[]> response)
-        {
-        	if (response == null) throw new ArgumentNullException("response");
+		private void HandleClientErrors(HttpStatusCode statusCode)
+		{
+			throw new GitHubApiException(
+				"The server indicated a client error has occured and returned the following HTTP status code: " + statusCode,
+				GitHubApiError.ClientError);
+		}
 
-        	if (response.StatusCode == HttpStatusCode.BadRequest)
-			{
-				throw new GitHubApiException(
-					"The server could not understand your request. Verify that request parameters (and content, if any) are valid.",
-					GitHubApiError.BadRequest);
-			}
-
-        	if (response.StatusCode == HttpStatusCode.Unauthorized)
-        	{
-        		throw new GitHubApiException(
-        			"Authentication failed or was not provided. Verify that you have sent valid credentials.",
-        			GitHubApiError.AuthorizationRequired);
-        	}
-        	
-			if (response.StatusCode == HttpStatusCode.Forbidden)
-        	{
-        		throw new GitHubApiException(
-        			"The server understood your request and verified your credentials, but you are not allowed to perform the requested action.",
-        			GitHubApiError.Forbidden);
-        	}
-        	
-			if (response.StatusCode == HttpStatusCode.NotFound)
-        	{
-        		throw new GitHubApiException(
-        			"The resource that you requested does not exist.",
-        			GitHubApiError.NotFound);
-        	}
-        	
-			if (response.StatusCode == HttpStatusCode.Conflict)
-        	{
-        		throw new GitHubApiException(
-        			"The resource that you are trying to create already exists. This should also provide a Location header to the resource in question.",
-        			GitHubApiError.Conflict);
-        	}
-        }
-
-    	private void HandleServerErrors(HttpStatusCode statusCode)
-        {
-		    if (statusCode == HttpStatusCode.InternalServerError) 
-            {
-                throw new GitHubApiException(
-					"An unknown error has occurred.", 
-                    GitHubApiError.InternalServerError);
-		    }
-	    }
+		private void HandleServerErrors(HttpStatusCode statusCode)
+		{
+			throw new GitHubApiException(
+				"The server indicated a server error has occured and returned the following HTTP status code: " + statusCode,
+				GitHubApiError.ServerError);
+		}
     }
 }

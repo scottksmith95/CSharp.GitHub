@@ -61,7 +61,7 @@ namespace CSharp.GitHub.Api
         public GitHubApiException(string message, Exception innerException)
             : base(message, innerException)
         {
-            _error = GitHubApiError.InternalServerError;
+            _error = GitHubApiError.ServerError;
         }
 
         /// <summary>
