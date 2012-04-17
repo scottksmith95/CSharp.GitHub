@@ -6,4 +6,9 @@ It contains the following
   * API access via explicit Urls and response handling for GitHub
   * ASP.NET MVC 3 example project
 
+The following will be added
+
+  * API binding for GitHub
+  * Console application example project
+
 API documentation can be found here: http://developer.github.com/
