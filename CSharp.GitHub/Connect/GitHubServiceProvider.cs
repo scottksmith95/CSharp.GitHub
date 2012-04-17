@@ -31,6 +31,11 @@ namespace CSharp.GitHub.Connect
 	/// <author>Scott Smith</author>
     public class GitHubServiceProvider : AbstractOAuth2ServiceProvider<IGitHub>
     {
+		/// <summary>
+		/// Creates a new instance of <see cref="GitHubServiceProvider"/>.
+		/// </summary>
+		/// <param name="clientId">The application's API client id.</param>
+		/// <param name="clientSecret">The application's API client secret.</param>
         public GitHubServiceProvider(String clientId, String clientSecret)
             : base(new OAuth2Template(clientId, clientSecret,
                 "https://github.com/login/oauth/authorize",
