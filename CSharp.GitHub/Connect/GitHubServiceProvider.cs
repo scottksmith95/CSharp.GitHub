@@ -47,7 +47,7 @@ namespace CSharp.GitHub.Connect
 		/// Returns an API interface allowing the client application to access unprotected resources.
 		/// </summary>
 		/// <returns>A binding to the service provider's API.</returns>
-		public IGitHub GetAPi()
+		public IGitHub GetApi()
 		{
 			return new GitHubTemplate();
 		}
